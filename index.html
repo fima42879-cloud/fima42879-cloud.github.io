@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивное приложение</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            max-width: 300px;
+        }
+
+        .penis {
+            font-family: monospace;
+            font-size: 20px;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+            line-height: 1.2;
+            color: #333;
+        }
+
+        .click-area {
+            cursor: pointer;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f8f9fa;
+            border: 2px dashed #dee2e6;
+            margin: 20px 0;
+        }
+
+        .congrats {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin: 20px 0;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.5s ease;
+        }
+
+        .congrats.show {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .counter {
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .reset-btn {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        .reset-btn:hover {
+            background: #45b7af;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎯 Нажимай на пенис!</h2>
+        
+        <div class="counter">
+            Нажатий: <span id="clickCount">0</span>/5
+        </div>
+
+        <div class="click-area" id="clickArea">
+            <div class="penis" id="penis">
+                █<br>
+                █<br>
+                █<br>
+                8=======D
+            </div>
+        </div>
+
+        <div class="congrats" id="congrats">
+            МОЛОДЕЦ! 🎉
+        </div>
+
+        <button class="reset-btn" id="resetBtn">Сбросить</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
