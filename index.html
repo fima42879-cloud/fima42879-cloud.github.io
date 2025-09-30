@@ -1,206 +1,28 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Интерактивное приложение</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Click Test</title>
     <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            max-width: 300px;
-        }
-
-        .penis {
-            font-family: 'Courier New', monospace;
-            font-size: 20px;
-            margin: 30px 0;
-            transition: all 0.3s ease;
-            line-height: 1.2;
-            color: #333;
-            user-select: none;
-        }
-
-        .click-area {
-            cursor: pointer;
-            padding: 20px;
-            border-radius: 15px;
-            background: #f8f9fa;
-            border: 2px dashed #dee2e6;
-            margin: 20px 0;
-            transition: all 0.3s ease;
-        }
-
-        .click-area:active {
-            background: #e9ecef;
-            transform: scale(0.98);
-        }
-
-        .congrats {
-            font-size: 24px;
-            font-weight: bold;
-            color: #ff6b6b;
-            margin: 20px 0;
-            opacity: 0;
-            transform: scale(0.5);
-            transition: all 0.5s ease;
-        }
-
-        .congrats.show {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .counter {
-            color: #666;
-            margin-bottom: 10px;
-            font-size: 18px;
-        }
-
-        .reset-btn {
-            background: #4ecdc4;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .reset-btn:hover {
-            background: #45b7af;
-            transform: scale(1.05);
-        }
-
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-        }
+        body { text-align: center; font-family: Arial; padding: 50px; }
+        #penis { font-size: 30px; cursor: pointer; margin: 50px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>🎯 Нажимай на пенис!</h2>
-        
-        <div class="counter">
-            Нажатий: <span id="clickCount">0</span>/5
-        </div>
-
-        <div class="click-area" id="clickArea">
-            <div class="penis" id="penis">
-                8<br>
-                │<br>
-                │<br>
-                │<br>
-                └┐<br>
-                &nbsp;&nbsp;└┐<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;└═D
-            </div>
-        </div>
-
-        <div class="congrats" id="congrats">
-            МОЛОДЕЦ! 🎉
-        </div>
-
-        <button class="reset-btn" id="resetBtn">Сбросить</button>
-    </div>
+    <div>Кликов: <span id="count">0</span>/5</div>
+    <div id="penis" onclick="clickPenis()">8===D</div>
+    <div id="message" style="display:none; color:red; font-size:24px;">МОЛОДЕЦ!</div>
 
     <script>
-        // Элементы DOM
-        const clickArea = document.getElementById('clickArea');
-        const penis = document.getElementById('penis');
-        const congrats = document.getElementById('congrats');
-        const clickCountElement = document.getElementById('clickCount');
-        const resetBtn = document.getElementById('resetBtn');
-
-        // Переменные состояния
-        let clickCount = 0;
-        const maxClicks = 5;
-        const baseSize = 20; // базовый размер шрифта
-
-        // Функция для обновления размера пениса
-        function updatePenisSize() {
-            const newSize = baseSize + (clickCount * 6);
-            penis.style.fontSize = ${newSize}px;
+        let count = 0;
+        
+        function clickPenis() {
+            count++;
+            document.getElementById('count').textContent = count;
+            document.getElementById('penis').style.fontSize = (30 + count * 10) + 'px';
             
-            // Добавляем эффект "пульсации" при клике
-            penis.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                penis.style.transform = 'scale(1)';
-            }, 150);
-        }
-// Функция для проверки достижения максимума кликов
-        function checkCompletion() {
-            if (clickCount >= maxClicks) {
-                congrats.classList.add('show');
-                clickArea.style.cursor = 'default';
-                clickArea.style.opacity = '0.6';
-                
-                console.log('Поздравление показано!'); // Для отладки
+            if (count >= 5) {
+                document.getElementById('message').style.display = 'block';
             }
-        }
-
-        // Обработчик клика
-        clickArea.addEventListener('click', function() {
-            console.log('Клик зарегистрирован!'); // Для отладки
-            
-            if (clickCount < maxClicks) {
-                clickCount++;
-                clickCountElement.textContent = clickCount;
-                console.log('Счетчик:', clickCount); // Для отладки
-                updatePenisSize();
-                checkCompletion();
-            }
-        });
-
-        // Обработчик сброса
-        resetBtn.addEventListener('click', function() {
-            clickCount = 0;
-            clickCountElement.textContent = clickCount;
-            penis.style.fontSize = ${baseSize}px;
-            congrats.classList.remove('show');
-            clickArea.style.cursor = 'pointer';
-            clickArea.style.opacity = '1';
-            console.log('Сброс выполнен!'); // Для отладки
-        });
-
-        // Инициализация при загрузке
-        document.addEventListener('DOMContentLoaded', function() {
-            clickCountElement.textContent = clickCount;
-            console.log('Приложение загружено!'); // Для отладки
-            
-            // Анимация появления элементов
-            setTimeout(() => {
-                document.querySelector('.container').style.opacity = '1';
-            }, 100);
-        });
-
-        // Инициализация Telegram Web App (если в Telegram)
-        try {
-            const tg = window.Telegram.WebApp;
-            tg.expand();
-            tg.enableClosingConfirmation();
-            console.log('Telegram Web App инициализирован');
-        } catch (e) {
-            console.log('Запущено вне Telegram, но работает');
         }
     </script>
 </body>
